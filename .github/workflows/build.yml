@@ -112,8 +112,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          gh release create "$TAG" --verify-tag --title "PHP backports for Ubuntu 18.04 ($TAG)" --notes-file README.md
-          gh release upload "$TAG" artifacts/*/SHA256SUMS-* artifacts/*/build-php*.log site/key.asc
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --verify-tag --title "PHP backports for Ubuntu 18.04 ($TAG)" --notes-file README.md
+          # A single artifact is extracted straight into artifacts/, several into subdirectories
+          find artifacts -name 'SHA256SUMS-*' -o -name 'build-php*.log' | xargs gh release upload "$TAG" --clobber site/key.asc
 
       - uses: actions/upload-pages-artifact@v4
         with:
