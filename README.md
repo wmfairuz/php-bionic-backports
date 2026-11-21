@@ -33,14 +33,20 @@ For Ubuntu 20.04, see the sister repository
 
 ## What's fixed
 
-| PHP | Package version in this repo     | What `php -v` shows | CVE-2026-109618 / CVE-2026-109619 |
-| --- | -------------------------------- | ------------------- | --------------------------------- |
-| 8.1 | `8.1.34-9+pbb1~ubuntu18.04.1`    | 8.1.34              | fixed (backport)                  |
+| PHP | Package version in this repo     | What `php -v` shows | October fixes (CVE-2026-109618/109619) | November fixes (CVE-2026-129289, CVE-2026-115560, …) |
+| --- | -------------------------------- | ------------------- | -------------------------------------- | ---------------------------------------------------- |
+| 8.1 | `8.1.34-15+pbb1~ubuntu18.04.1`   | 8.1.34              | fixed (backport)                       | fixed (backport)                                     |
 
-CVE-2026-109618 and CVE-2026-109619 are the critical (CVSS 9.2) remote code
-execution bugs fixed in PHP 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 on 2026-10-21.
-PHP no longer maintains 8.1; Sury backported the fix, which is why the version
-number does not change. The package also carries every earlier PHP 8.1
+- **October 2026:** CVE-2026-109618 and CVE-2026-109619, critical (CVSS 9.2)
+  remote code execution bugs fixed in PHP 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 on
+  2026-10-21.
+- **November 2026:** the security round fixed in PHP 8.2.36 / 8.3.37 / 8.4.28 /
+  8.5.13 on 2026-11-19, including CVE-2026-129289 (PHP-FPM request smuggling
+  when the web server reuses FastCGI connections) and CVE-2026-115560 (session
+  serializer mismatch). Both can lead to remote code execution.
+
+PHP no longer maintains 8.1; Sury backported the fixes, which is why the
+version number does not change. The package also carries every earlier PHP 8.1
 security fix, up to and including 8.1.34.
 
 Other PHP versions for 18.04 may follow.
@@ -148,7 +154,7 @@ dpkg -l 'php8.1-common' | grep ^ii
 ```
 
 ```
-ii  php8.1-common  8.1.34-9+pbb1~ubuntu18.04.1  amd64  documentation, examples and common module for PHP
+ii  php8.1-common  8.1.34-15+pbb1~ubuntu18.04.1  amd64  documentation, examples and common module for PHP
 ```
 
 Also confirm PHP-FPM came back up:
